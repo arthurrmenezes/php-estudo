@@ -14,10 +14,13 @@ class UserManager {
         return $this->userList;
     }
 
-    public function getUserByEmail(string $email): void
+    public function getUserByEmail(string $email): ?User
     {
-        foreach ($this->userList as $users) {
-            var_dump($users);
+        foreach ($this->userList as $user) {
+            if ($user->getEmail() == $email) {
+                return $user;
+            }
+            return null;
         }
     }
 }

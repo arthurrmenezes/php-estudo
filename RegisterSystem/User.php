@@ -21,12 +21,10 @@ class User {
 
     public function verifyPassword(string $password): bool
     {
-        return password_verify($password, $this->password);
-    }
-
-    public function changePasswordToHash(string $passwordHash): void
-    {
-        $this->password = password_hash($passwordHash, PASSWORD_DEFAULT);
+        if ($this->password != $password) {
+            return false;
+        }
+        return true;
     }
 
 }
