@@ -9,14 +9,13 @@ class BookManager {
         $this->bookList[] = $book;
     }
 
-    public function removeBook(Book $removeBook): void
+    public function removeBook(string $removeBookName): void
     {
-        $removeBookName = $removeBook->getName();
         $index = array_search($removeBookName, $bookList);
         if ($index !== false) {
-            unset($bookList[$index]);
+            unset($this->bookList[$index]);
         }
-        $bookList = array_values($bookList);
+        $this->bookList = array_values($this->bookList);
     }
 
     public function getBookList(): array
@@ -26,25 +25,38 @@ class BookManager {
 
     public function getMostExpensiveBook(): void
     {
-        foreach ($bookList as $book) {
-            if ($book->getPrice() > $expensiveBook) {
+        $expensiveBook = null;
+
+        foreach ($this->bookList as $book) {
+            if ($expensiveBook === null || $book->getPrice() > $expensiveBook->getPrice()) {
                 $expensiveBook = $book;
             }
         }
-        echo "The most expensive book is " . $expensiveBook->getName() . "\n";
-        echo "The price is $" . $expensiveBook->getPrice . "\n";
+
+        if ($expensiveBook !== null) {
+            echo "The most expensive book is " . $expensiveBook->getName() . "\n";
+            echo "The price is $" . $expensiveBook->getPrice() . "\n";
+        } else {
+            echo "No books available.\n";
+        }
     }
 
     public function getCheapestBook(): void
     {
-        foreach ($bookList as $book) {
-            if ($book->getPrice() > $expensiveBook) {
-                $expensiveBook = $book;
+        $cheapestBook = null;
+
+        foreach ($this->bookList as $book) {
+            if ($cheapestBook === null || $book->getPrice() < $cheapestBook->getPrice()) {
+                $cheapestBook = $book;
             }
         }
-        echo "The cheapest book is " . $expensiveBook->getName() . "\n";
-        echo "The price is $" . $expensiveBook->getPrice . "\n";
-    }
 
+        if ($cheapestBook !== null) {
+            echo "The cheapest book is " . $cheapestBook->getName() . "\n";
+            echo "The price is $" . $cheapestBook->getPrice() . "\n";
+        } else {
+            echo "No books available.\n";
+        }
+    }
 
 }

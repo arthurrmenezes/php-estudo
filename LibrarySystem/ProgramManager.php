@@ -3,32 +3,44 @@
 require __DIR__ . "/Book.php";
 require __DIR__ . "/BookManager.php";
 
+$globalBookManager = new BookManager();
+
 class programManager {
 
     private bool $runProgram = true;
-    private Book $book;
-    private BookManager $bookManager;
 
     public function run(): void
     {
+        global $globalBookManager;
+
         while ($this->runProgram) {
             
             $this->programFunctions();
             $option = fgets(STDIN);
 
-            switch ($option) {
+            switch (trim($option)) {
                 case 1:
                     echo "Book's name: ";
-                    $bookName = fgets(STDIN);
+                    $bookName = trim(fgets(STDIN));
                     echo "Book's price: ";
-                    $bookPrice = fgets(STDIN);
+                    $bookPrice = (float) trim(fgets(STDIN));
+
                     $book = new Book($bookName, $bookPrice);
+                    $globalBookManager->addBook($book);
                     break;
                 case 2:
-                    $bookManager = new BookManager();
-                    var_dump($bookManager->getBookList());
+                    var_dump($globalBookManager->getBookList());
                     break;
                 case 3:
+                    echo "Book's Name what gonna be removed: ";
+                    $bookName = trim(fgets(STDIN));
+                    $globalBookManager->removeBook($bookName);
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
                     $this->runProgram = false;
                     echo "Ending program...";
                     break;
@@ -43,7 +55,10 @@ class programManager {
     {
         echo "\n1. Register New Book" . "\n";
         echo "2. Get Book List" . "\n";
-        echo "3. Exit Program" . "\n";
+        echo "3. Remove Book" . "\n";
+        echo "4. Get Most Expensive Book" . "\n";
+        echo "5. Get Cheapest Book" . "\n";
+        echo "6. Exit Program" . "\n";
         echo "Option: ";
     }
     
