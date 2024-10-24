@@ -20,7 +20,7 @@ class programManager {
 
             switch (trim($option)) {
                 case 1:
-                    echo "Book's name: ";
+                    echo "\nBook's name: ";
                     $bookName = trim(fgets(STDIN));
                     echo "Book's price: ";
                     $bookPrice = (float) trim(fgets(STDIN));
@@ -29,7 +29,9 @@ class programManager {
                     $globalBookManager->addBook($book);
                     break;
                 case 2:
-                    var_dump($globalBookManager->getBookList());
+                    foreach ($globalBookManager->getBookList() as $books) {
+                        var_dump($books);
+                    }
                     break;
                 case 3:
                     echo "Book's Name what gonna be removed: ";
@@ -37,8 +39,10 @@ class programManager {
                     $globalBookManager->removeBook($bookName);
                     break;
                 case 4:
+                    $globalBookManager->getMostExpensiveBook();
                     break;
                 case 5:
+                    $globalBookManager->getCheapestBook();
                     break;
                 case 6:
                     $this->runProgram = false;

@@ -11,7 +11,7 @@ class BookManager {
 
     public function removeBook(string $removeBookName): void
     {
-        $index = array_search($removeBookName, $bookList);
+        $index = array_search($removeBookName, $this->bookList);
         if ($index !== false) {
             unset($this->bookList[$index]);
         }
